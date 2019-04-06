@@ -1,4 +1,10 @@
 {
+   "type": "postgres",
+   "host": "localhost",
+   "port": 5432,
+   "username": "fswd",
+   "password": "example",
+   "database": "fswd1",
    "synchronize": true,
    "logging": false,
    "entities": [

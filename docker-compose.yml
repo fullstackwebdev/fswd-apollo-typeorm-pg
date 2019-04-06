@@ -1,0 +1,17 @@
+# https://github.com/sclorg/postgresql-container/tree/generated/10
+version: '3.7'
+
+services:
+
+  db:
+    image: centos/postgresql-10-centos7
+    # restart: always
+    environment:
+      POSTGRESQL_DATABASE: fswd1
+      POSTGRESQL_USER: fswd
+      POSTGRESQL_PASSWORD: example
+      POSTGRESQL_ADMIN_PASSWORD: example
+    volumes:
+      - ./db-data:/var/lib/pgsql/data #sudo setfacl -m u:26:-wx ./db-data
+    ports:
+      - 5432:5432
