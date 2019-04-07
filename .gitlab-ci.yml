@@ -8,7 +8,7 @@ variables:
   DOCKER_HOST: tcp://docker:2375/
   DOCKER_DRIVER: overlay2
   CONTAINER_IMAGE: $CI_REGISTRY/$CI_PROJECT_PATH
-  NODE_ENV: development
+  NODE_ENV: staging
 
 services:
 - name: docker:dind
@@ -35,7 +35,7 @@ test-backend:
     # - setfacl -m u:26:-wx ./db-data
     - chown 26 -R ./db-data
     - chmod 777 ./db-data
-    - docker-compose up 
+    - docker-compose up -d
     - docker-compose -f docker-compose-ci.yml run backend-ci npm test
     - docker-compose down
    
