@@ -1,13 +1,13 @@
 version: '3.7'
 
 services:
-  start_dependencies:
-    image: dadarek/wait-for-dependencies
-    command: backend:3000
-    networks:
-      default:
-        aliases:
-          - backend
+  # start_dependencies:
+  #   image: dadarek/wait-for-dependencies
+  #   command: backend:3000
+  #   networks:
+  #     default:
+  #       aliases:
+  #         - backend
 
   backend-ci:
     build:
