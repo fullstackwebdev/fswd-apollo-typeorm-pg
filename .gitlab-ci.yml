@@ -35,7 +35,7 @@ test-backend:
     # - setfacl -m u:26:-wx ./db-data
     - chown 26 -R ./db-data
     - chmod 777 ./db-data
-    - docker-compose up -d 
+    - docker-compose up 
     - docker-compose -f docker-compose-ci.yml run backend-ci npm test
     - docker-compose down
    
