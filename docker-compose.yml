@@ -5,7 +5,6 @@ services:
   db:
     image: centos/postgresql-10-centos7
     # restart: always
-    user: root
     environment:
       POSTGRESQL_DATABASE: fswd1
       POSTGRESQL_USER: fswd
