@@ -32,7 +32,9 @@ test-backend:
   stage: test1
   script:
     - mkdir ./db-data
-    - setfacl -m u:26:-wx ./db-data
+    # - setfacl -m u:26:-wx ./db-data
+    - chown 26 -R ./db-data
+    - chmod 777 ./db-data
     - docker-compose run -d 
     - docker-compose -f docker-compose-ci.yml run backend-ci npm test
     - docker-compose down
