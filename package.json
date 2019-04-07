@@ -4,29 +4,46 @@
    "description": "",
    "main": "index.js",
    "scripts": {
-      "start": "ts-node src/index.ts"
+      "start": "ts-node-dev src/index.ts",
+      "test": "jest"
    },
    "keywords": [],
    "author": "",
    "license": "ISC",
    "dependencies": {
+      "@types/chai": "^4.1.7",
       "@typescript-eslint/eslint-plugin": "^1.6.0",
       "@typescript-eslint/parser": "^1.6.0",
+      "apollo-server": "^2.4.8",
+      "apollo-server-express": "^2.4.8",
+      "bcryptjs": "^2.4.3",
+      "body-parser": "^1.18.1",
       "eslint": "^5.16.0",
-      "pg": "^7.3.0",
-      "typeorm": "0.2.16",
-      "typescript": "^3.4.2",
-      "reflect-metadata": "^0.1.10",
       "express": "^4.15.4",
-      "body-parser": "^1.18.1"
+      "graphql": "^14.2.1",
+      "graphql-resolvers": "^0.3.2",
+      "graphql-tag": "^2.10.1",
+      "jsonwebtoken": "^8.5.1",
+      "merge-graphql-schemas": "^1.5.8",
+      "pg": "^7.3.0",
+      "reflect-metadata": "^0.1.10",
+      "typeorm": "0.2.16",
+      "typescript": "^3.4.2"
    },
    "devDependencies": {
+      "@types/graphql": "^14.2.0",
+      "@types/jest": "^24.0.11",
+      "@types/node": "^8.0.29",
+      "axios": "^0.18.0",
+      "chai": "^4.2.0",
       "eslint-config-prettier": "^4.1.0",
       "eslint-plugin-prettier": "^3.0.1",
+      "jest": "^24.7.1",
+      "pg-promise": "^8.6.4",
       "prettier": "^1.16.4",
-      "ts-node-dev": "^1.0.0-pre.32",
+      "ts-jest": "^24.0.2",
       "ts-node": "3.3.0",
-      "@types/node": "^8.0.29",
+      "ts-node-dev": "^1.0.0-pre.32",
       "typescript": "2.5.2"
    }
 }

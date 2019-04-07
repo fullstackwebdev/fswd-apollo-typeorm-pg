@@ -1,5 +1,36 @@
+install 
+npm install @types/pg
 
-Setup TypeORM and Apollo Server
+
+
+Setup Apollo Server
+----
+```
+npm install -P apollo-server graphql
+npm install -P apollo-server-express
+npm install -P graphql-tag 
+
+npm install -D @types/graphql
+
+Setup ApolloServer
+---
+/// index.ts
+import { ApolloServer } from 'apollo-server-express';
+import { typeDefs, resolvers } from './schema';
+
+const apollo = new ApolloServer({
+  typeDefs,
+  resolvers,
+});
+
+... create ./src/schema with typedef and schema
+
+---
+```
+
+
+
+Setup TypeORM and Postgresql
 ----
 ```
 
@@ -9,6 +40,38 @@ npm install pg --save
 typeorm, make sure your tsconfig.json has:
 "emitDecoratorMetadata": true,
 "experimentalDecorators": true,
+
+Init typeorm
+
+ npx typeorm init --express --docker --db postgres
+
+Install
+npm install
+
+Create docker-compose.yml
+---
+  db:
+    image: centos/postgresql-10-centos7
+    # restart: always
+    environment:
+      POSTGRESQL_DATABASE: fswd1
+      POSTGRESQL_USER: fswd
+      POSTGRESQL_PASSWORD: example
+      POSTGRESQL_ADMIN_PASSWORD: example
+    volumes:
+      - ./db-data:/var/lib/pgsql/data #sudo setfacl -m u:26:-wx ./db-data
+    ports:
+      - 5432:5432
+---
+
+Set ormconfig.json password
+
+Set docker-compose password
+Set db-data permissions
+---
+sudo setfacl -m u:26:-wx ./db-data
+---
+
 
 
 

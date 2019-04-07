@@ -1,0 +1,18 @@
+  type Query {
+    hello: String
+    users: [User]
+    loggedIn: Boolean
+  }
+  type Mutation {
+    createUser(username: String, password: String, email: String): User
+    signIn(username: String, password: String): UserToken
+  }
+  type User {
+    username: String
+    password: String
+    email: String
+  }
+  type UserToken {
+    token: String
+    message: String
+  }
