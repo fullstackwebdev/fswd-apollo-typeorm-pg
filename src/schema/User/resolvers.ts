@@ -4,7 +4,7 @@ import * as bcrypt from 'bcryptjs';
 import { combineResolvers } from 'graphql-resolvers';
 import { getConnection, Repository } from 'typeorm';
 import { AuthenticationError } from 'apollo-server-core';
-import { SECRET } from '../../index';
+import { SECRET } from '../../env';
 import * as jwt from 'jsonwebtoken';
 
 let repository: Repository<User>;

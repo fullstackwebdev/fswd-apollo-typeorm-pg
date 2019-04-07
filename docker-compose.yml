@@ -13,5 +13,52 @@ services:
       POSTGRESQL_ADMIN_PASSWORD: example
     volumes:
       - ./db-data:/var/lib/pgsql/data #sudo setfacl -m u:26:-wx ./db-data
+    expose:
+      - 5432
+    networks:
+      default:
+        aliases:
+          - db
+
+  start_dependencies:
+    image: dadarek/wait-for-dependencies
+    depends_on:
+      - db
+    command: db:5432
+    networks:
+      default:
+
+  backend:
+    container_name: backend
+    build:
+      context: .
+    # image: ${CI_DOCKER_REGISTRY}/fullstackcicd/podium/podium-backend:${CI_COMMIT_REF_SLUG:-latest}
+    volumes:
+      - './:/usr/src/app/'
+      - '/usr/src/app/node_modules'
+    depends_on:
+      - start_dependencies
+    expose:
+      - 3000
     ports:
-      - 5432:5432
+      # - '3000:3000'
+      - 9229:9229
+      - 9230:9230
+    environment:
+      - NODE_ENV=staging
+      - HOST=db
+      - DBPORT=5432
+    networks:
+      outside:
+      default:
+        aliases:
+          - backend
+
+
+networks:
+  outside:
+    internal: false
+  default:
+    name: fswd
+    internal: true
+   

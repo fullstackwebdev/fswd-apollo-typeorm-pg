@@ -1,0 +1,47 @@
+# add git-ignore syntax here of things you don't want copied into docker image
+
+.git
+*Dockerfile*
+*docker-compose*
+data
+node_modules
+.archive
+archive
+
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# production
+/build
+
+# misc
+.DS_Store
+# .env.local
+# .env.development.local
+# .env.test.local
+# .env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+
+node_modules/
+data/
+mochawesome-report/
+.vscode
+/.archive
+test/
+frontend/test/output/
+frontend/build/
+frontend/semantic/
+/output/
+/e2e-report/
+/db-data/

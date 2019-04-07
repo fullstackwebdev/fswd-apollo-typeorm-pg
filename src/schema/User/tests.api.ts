@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { inspect } from 'util';
 
-const PORT = 3000;
-const API_URL = `http://localhost:${PORT}/graphql`;
+import { PORT, SERVER } from '../../env';
+// const PORT = 3000;
+const API_URL = `http://${SERVER}:${PORT}/graphql`;
 
 const setToken = token => {
   return token ? { headers: { 'x-token': token } } : null;
@@ -29,7 +30,7 @@ export const signIn = async variables => {
 };
 
 export const createAccount = async variables => {
-  // console.log(`got ${inspect(variables)}`);
+  console.log(`got ${inspect(API_URL)}`);
   return axios.post(API_URL, {
     query: `
     mutation (

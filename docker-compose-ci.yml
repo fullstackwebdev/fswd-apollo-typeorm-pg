@@ -1,0 +1,29 @@
+version: '3.7'
+
+services:
+  start_dependencies:
+    image: dadarek/wait-for-dependencies
+    command: backend:3000
+    networks:
+      default:
+        aliases:
+          - backend
+
+  backend-ci:
+    build:
+      context: .
+    command: npm test
+    depends_on:
+      - start_dependencies
+    environment:
+      - NODE_ENV=staging
+    networks:
+      default:
+        aliases:
+          - backend-ci
+
+networks:
+  default:
+    name: fswd
+    external: true
+   

@@ -10,9 +10,7 @@ import { inspect } from 'util';
 import { Routes } from './routes';
 // import DataLoader from 'dataloader'; // TODO
 
-export const SECRET = 'asdfsdfa' || process.env.SECRET;
-export const PORT = 3000 || process.env.PORT;
-export let SERVER_URI = `http://localhost:${PORT}`;
+import { PORT, SECRET, SERVER, TRUNCATE_ON_RELOAD, DBUSER, DBPASSWD, DBHOST, DBPORT, DATABASE } from './env';
 
 const getMe = async req => {
   const token = req.headers['x-token'];
@@ -38,7 +36,6 @@ const apollo = new ApolloServer({
   context: async ({ req }) => {
     if (req) {
       const authScope = await getMe(req);
-
       return {
         authScope,
         // loaders: { // TODO
@@ -51,16 +48,17 @@ const apollo = new ApolloServer({
   },
 });
 
-if (process.env.ENVIRONMENT === 'development' || true) {
+if (TRUNCATE_ON_RELOAD === 'true' && process.env.NODE_ENV !== 'production') {
+  console.log(`Nuking DB...`);
   const pgp = require('pg-promise')();
   const db = pgp({
-    host: 'localhost',
-    port: 5432,
-    database: 'fswd1',
-    user: 'fswd',
-    password: 'example',
+    host: DBHOST,
+    port: DBPORT,
+    database: DATABASE,
+    user: DBUSER,
+    password: DBPASSWD,
   });
-  db.any(`DROP TABLE "user"`).catch(console.error);
+  db.any(`TRUNCATE TABLE "user"`).catch();
 }
 
 createConnection()
@@ -82,8 +80,7 @@ createConnection()
       });
     });
 
-    const listener = app.listen(PORT);
-    console.log(`Listening on ${inspect(listener.address())}`);
-    //SERVER_URI = `${listener.address()}`;
+    app.listen(PORT);
+    console.log(`Listening on http://${SERVER}:${PORT}/graphql`);
   })
   .catch(error => console.log(error));

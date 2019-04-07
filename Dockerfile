@@ -17,7 +17,8 @@ WORKDIR /opt/node_app
 
 USER node
 COPY --chown=node:node package.json package-lock.json* ./
-RUN npm install --no-optional && npm cache clean --force
+RUN npx yarn 
+# npm install --no-optional && npm cache clean --force
 ENV PATH /opt/node_app/node_modules/.bin:$PATH
 
 COPY --chown=node:node . .
