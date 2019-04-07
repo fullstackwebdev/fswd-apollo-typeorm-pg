@@ -31,7 +31,7 @@ services:
     container_name: backend
     build:
       context: .
-     image: ${CI_DOCKER_REGISTRY}/fullstackcicd-runner/fswd-apollo-typeorm-pg:${CI_COMMIT_REF_SLUG:-latest}
+    image: ${CI_DOCKER_REGISTRY}/fullstackcicd-runner/fswd-apollo-typeorm-pg:${CI_COMMIT_REF_SLUG:-latest}
     volumes:
       - './:/usr/src/app/'
       - '/usr/src/app/node_modules'
