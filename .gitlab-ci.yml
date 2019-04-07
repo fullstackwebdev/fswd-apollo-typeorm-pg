@@ -1,0 +1,48 @@
+# https://docs.gitlab.com/ee/ci/yaml/
+
+image:
+  name: docker/compose:1.23.2 
+  entrypoint: [""]
+
+variables:
+  # DOCKER_HOST: tcp://docker:2375/
+  DOCKER_DRIVER: overlay2
+  CONTAINER_IMAGE: $CI_REGISTRY/$CI_PROJECT_PATH
+  NODE_ENV: development
+
+services:
+- name: docker:dind
+
+before_script:
+  - echo "$CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY"
+  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  
+stages:
+  - build
+  - test1
+  - deploy
+
+build:
+  stage: build
+  script:
+    - docker-compose build  --parallel --pull 
+    - docker-compose push
+
+test-backend:
+  stage: test1
+  script:
+    - mkdir ./db-data
+    - setfacl -m u:26:-wx ./db-data
+    - docker-compose run -d 
+    - docker-compose -f docker-compose-ci.yml run backend-ci npm test
+    - docker-compose down
+   
+deploy:
+  when: manual
+  stage: deploy
+  variables:
+  script:
+    - export DOCKER_HOST=unix:///var/run/docker.sock
+    # - docker stack deploy --compose-file docker-cloud.yml --with-registry-auth podium
+  only:
+    - master

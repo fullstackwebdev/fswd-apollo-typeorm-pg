@@ -2,7 +2,6 @@
 version: '3.7'
 
 services:
-
   db:
     image: centos/postgresql-10-centos7
     # restart: always
@@ -32,7 +31,7 @@ services:
     container_name: backend
     build:
       context: .
-    # image: ${CI_DOCKER_REGISTRY}/fullstackcicd/podium/podium-backend:${CI_COMMIT_REF_SLUG:-latest}
+     image: ${CI_DOCKER_REGISTRY}/fullstackcicd-runner/fswd-apollo-typeorm-pg:${CI_COMMIT_REF_SLUG:-latest}
     volumes:
       - './:/usr/src/app/'
       - '/usr/src/app/node_modules'
@@ -46,14 +45,11 @@ services:
       - 9230:9230
     environment:
       - NODE_ENV=staging
-      - HOST=db
-      - DBPORT=5432
     networks:
       outside:
       default:
         aliases:
           - backend
-
 
 networks:
   outside:
