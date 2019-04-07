@@ -13,8 +13,6 @@ services:
     build:
       context: .
     command: npm test
-    depends_on:
-      - start_dependencies
     environment:
       - NODE_ENV=staging
     networks:
