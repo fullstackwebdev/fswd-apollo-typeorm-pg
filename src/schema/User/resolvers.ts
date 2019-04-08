@@ -1,18 +1,24 @@
 import { isAuthenticated } from '../serviceHelpers';
-import { User } from './../../entity/User';
+import { User } from './User.entity';
 import * as bcrypt from 'bcryptjs';
 import { combineResolvers } from 'graphql-resolvers';
 import { getConnection, Repository } from 'typeorm';
 import { AuthenticationError } from 'apollo-server-core';
+import { GraphQLDatabaseLoader } from 'typeorm-loader';
+
 import { SECRET } from '../../env';
 import * as jwt from 'jsonwebtoken';
 
 let repository: Repository<User>;
+let loader;
 
 const initialize = () => {
   const connection = getConnection();
   repository = connection.getRepository(User);
+  loader = new GraphQLDatabaseLoader(connection);
 };
+
+// const connection = createConnection({ ... });
 
 const createToken = async (user, secret, expiresIn) => {
   const { id, email, username } = user;

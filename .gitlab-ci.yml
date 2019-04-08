@@ -36,7 +36,7 @@ test-backend:
     - chown 26 -R ./db-data
     - chmod 777 ./db-data
     - docker-compose up -d
-    - docker-compose -f docker-compose-ci.yml run backend-ci npm test
+    - docker-compose run backend npm test
     - docker-compose down
    
 deploy:

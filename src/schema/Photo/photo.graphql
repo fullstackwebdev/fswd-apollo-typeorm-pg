@@ -1,0 +1,26 @@
+extend type Query {
+  photo(ID: String): Photo
+  photos: [Photo!]
+}
+
+interface PhotoInterface {
+  id: String
+  name: String!
+}
+
+type Photo implements PhotoInterface {
+  id: String
+  name: String!
+}
+
+input PhotoInput {
+  id: String
+  name: String!
+}
+
+type Mutation {
+  createPhoto(name: PhotoInput): Photo
+  updatePhoto(name: PhotoInput): Photo
+  deletePhoto(name: PhotoInput): Boolean
+  togglePhoto(name: PhotoInput): Photo
+}
