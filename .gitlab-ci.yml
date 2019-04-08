@@ -32,7 +32,7 @@ test-backend:
   stage: test1
   script:
     - mkdir ./db-data
-    # - setfacl -m u:26:-wx ./db-data
+    # - setfacl -m u:26:-wx ./db-data # not support
     - chown 26 -R ./db-data
     - chmod 777 ./db-data
     - docker-compose up -d

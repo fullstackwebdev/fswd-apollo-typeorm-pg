@@ -15,10 +15,12 @@ services:
     command: npm test
     environment:
       - NODE_ENV=staging
+      - SERVER=backend
+      - PORT=3000
     networks:
       default:
-        aliases:
-          - backend-ci
+        # aliases:
+        #   - backend-ci
 
 networks:
   default:
