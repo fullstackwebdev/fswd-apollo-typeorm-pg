@@ -6,7 +6,8 @@
    "scripts": {
       "start": "ts-node-dev src/index.ts",
       "test": "jest",
-      "watch" : "jest --watch"
+      "watch": "jest --watch",
+      "ci": "start-server-and-test http://${SERVER}:${PORT}/ready"
    },
    "keywords": [],
    "author": "",
@@ -29,6 +30,7 @@
       "merge-graphql-schemas": "^1.5.8",
       "pg": "^7.3.0",
       "reflect-metadata": "^0.1.10",
+      "start-server-and-test": "^1.7.13",
       "typeorm": "0.2.16",
       "typescript": "^3.4.2"
    },

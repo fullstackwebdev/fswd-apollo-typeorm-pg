@@ -1,5 +1,5 @@
 import { isAuthenticated } from '../serviceHelpers';
-import { User } from './../../entity/User';
+import { User } from './User.entity';
 import * as bcrypt from 'bcryptjs';
 import { combineResolvers } from 'graphql-resolvers';
 import { getConnection, Repository } from 'typeorm';

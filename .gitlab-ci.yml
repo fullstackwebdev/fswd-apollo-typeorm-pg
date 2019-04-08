@@ -35,9 +35,9 @@ test-backend:
     # - setfacl -m u:26:-wx ./db-data # not support
     - chown 26 -R ./db-data
     - chmod 777 ./db-data
-    - docker-compose -p tests run -p 3000 backend npm test
+    - docker-compose -p tests run -p 3000 backend npm run ci
     # - docker-compose run backend npm test
-    - docker-compose down
+    # - docker-compose down
    
 deploy:
   when: manual

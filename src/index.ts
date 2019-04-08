@@ -70,5 +70,9 @@ createConnection()
 
     app.listen(PORT);
     console.log(`Listening on http://${SERVER}:${PORT}/graphql`);
+
+    app.get('/ready', function(req, res) {
+      res.sendStatus(200);
+    });
   })
   .catch(error => console.log(error));
