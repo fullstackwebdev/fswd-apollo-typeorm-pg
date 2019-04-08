@@ -49,7 +49,7 @@ const apollo = new ApolloServer({
 });
 
 if (TRUNCATE_ON_RELOAD === 'true' && process.env.NODE_ENV !== 'production') {
-  console.log(`Nuking DB...`);
+  console.log(`Nuking DB...TRUNCATE_ON_RELOAD set to true`);
   const pgp = require('pg-promise')();
   const db = pgp({
     host: DBHOST,
