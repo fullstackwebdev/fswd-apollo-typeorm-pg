@@ -9,9 +9,6 @@ describe('users', () => {
     it('get all users', async () => {
       const { data } = await getUsers({});
       expect(true).to.be.true;
-      // console.log(`got data ${inspect(data)}`);
-      // expect(data).to.not.be.undefined;
-      // expect(data.errors).to.be.undefined();
     });
     it('creates a new user', async () => {
       const { data } = await createAccount({
@@ -19,8 +16,6 @@ describe('users', () => {
         password: 'david',
         email: 'email@email.com',
       });
-      // console.log(`got data ${inspect(data)}`);
-
       expect(data.data.createUser).to.have.keys(['username', 'password', 'email']);
       expect(data.errors).to.be.undefined;
     });

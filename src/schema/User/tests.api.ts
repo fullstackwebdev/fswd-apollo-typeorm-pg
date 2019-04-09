@@ -2,7 +2,6 @@ import axios from 'axios';
 import { inspect } from 'util';
 
 import { PORT, SERVER } from '../../env';
-// const PORT = 3000;
 const API_URL = `http://${SERVER}:${PORT}/graphql`;
 
 const setToken = token => {

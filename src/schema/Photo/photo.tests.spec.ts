@@ -1,5 +1,4 @@
 import chai, { expect } from 'chai';
-// import chai from 'chai';
 import chaiSubset from 'chai-subset';
 import { getPhotos, createPhoto, getPhotoViaUser } from './photo.tests.api';
 import { getMe, signIn, createAccount } from '../User/tests.api';
