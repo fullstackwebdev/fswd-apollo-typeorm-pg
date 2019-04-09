@@ -1,0 +1,65 @@
+# https://walmartlabs.github.io/json-to-simple-graphql-schema/
+extend type Query {
+  job(id: String): Job
+  jobs(filter: String): [Job!]
+}
+
+type Client { 
+  country: String
+  feedback: Float
+  reviews_count: Int
+  jobs_posted: Int
+  past_hires: Int
+  payment_verification_status: String 
+}
+
+input ClientInput {
+  country: String
+  feedback: Float
+  reviews_count: Int
+  jobs_posted: Int
+  past_hires: Int
+  payment_verification_status: String 
+}
+
+type Job  {
+  id: String
+  title: String
+  snippet: String
+  category2: String
+  subcategory2: String
+  job_type: String
+  budget: Int
+  duration: String
+  workload: String
+  job_status: String
+  date_created: String
+  url: String
+  client: Client
+  skills: [String]
+}
+
+input JobInput {
+  id: String
+  title: String
+  snippet: String
+  category2: String
+  subcategory2: String
+  job_type: String
+  budget: Int
+  duration: String
+  workload: String
+  job_status: String
+  date_created: String
+  url: String
+  client: ClientInput
+  skills: [String] 
+}
+
+
+type Mutation {
+  createJob(job: JobInput): Job
+  updateJob(job: JobInput): Job
+  deleteJob(job: JobInput): Boolean
+  toggleJob(job: JobInput): Job
+}

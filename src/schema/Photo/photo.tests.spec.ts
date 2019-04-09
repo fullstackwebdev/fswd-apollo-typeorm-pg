@@ -6,6 +6,8 @@ import { inspect } from 'util';
 
 let token;
 
+chai.use(chaiSubset);
+
 describe('photos', () => {
   beforeAll(async () => {
     chai.use(chaiSubset);
