@@ -9,6 +9,24 @@ const setToken = token => {
   return token ? { headers: { 'x-token': token } } : null;
 };
 
+export const getMe = async token => {
+  return axios.post(
+    API_URL,
+    {
+      query: `
+  query getMe {
+    me {
+      id
+      username
+      email
+    }
+  }
+    `,
+    },
+    setToken(token),
+  );
+};
+
 export const signIn = async variables => {
   return axios.post(API_URL, {
     query: `

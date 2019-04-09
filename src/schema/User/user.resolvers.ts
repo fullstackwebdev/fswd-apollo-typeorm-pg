@@ -43,8 +43,18 @@ export const resolvers = {
       return users;
     },
     user: async (_parent, { id }, { _session, _req }) => {
-      return await User.findOne({ id });
+      if (repository === undefined) {
+        initialize();
+      }
+      return await repository
+        .createQueryBuilder('user')
+        .where({ id })
+        .leftJoinAndMapMany('user.photos', 'user.photos', 'photo', 'user.id = photo.user.id')
+        .getOne();
     },
+    me: combineResolvers(isAuthenticated, async (parent, args, context, info) => {
+      return await User.findOne({ id: context.authScope.user.id });
+    }),
   },
   Mutation: {
     signIn: async (_parent, { username, password }, { _session, _req }) => {
@@ -84,9 +94,8 @@ export const resolvers = {
     },
   },
   User: {
-    // user: async (_: any, args: { id: string }, context: any, info: GraphQLResolveInfo) => {
     photos: async (user: any, { ...args }, context: any, info: GraphQLResolveInfo) => {
-      return await loader.loadMany(Photo, { 'user.id': user.id }, info);
+      return await loader.loadMany(Photo, { id: user.id }, info);
     },
   },
 };

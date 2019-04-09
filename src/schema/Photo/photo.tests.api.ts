@@ -48,4 +48,24 @@ const createPhoto = async ({ variables, token }) =>
     setToken(token),
   );
 
-export { getPhotos, createPhoto };
+const getPhotoViaUser = async ({ variables, token }) => {
+  return axios.post(
+    API_URL,
+    {
+      query: `
+        query UserPhoto($id: ID!) {
+          user(id: $id) {
+            photos {
+              id
+              name
+            }
+          }
+        }
+        `,
+      variables,
+    },
+    setToken(token),
+  );
+};
+
+export { getPhotos, createPhoto, getPhotoViaUser };

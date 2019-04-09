@@ -1,7 +1,8 @@
   type Query {
     hello: String
     user(id: ID!): User
-    users: [User]
+    users: [User],
+    me: User,
     loggedIn: Boolean
   }
   type Mutation {

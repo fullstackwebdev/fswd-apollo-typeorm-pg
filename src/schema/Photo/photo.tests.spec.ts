@@ -1,8 +1,8 @@
 import chai, { expect } from 'chai';
 // import chai from 'chai';
 import chaiSubset from 'chai-subset';
-import { getPhotos, createPhoto } from './photo.tests.api';
-import { signIn, createAccount } from '../User/tests.api';
+import { getPhotos, createPhoto, getPhotoViaUser } from './photo.tests.api';
+import { getMe, signIn, createAccount } from '../User/tests.api';
 import { inspect } from 'util';
 
 let token;
@@ -10,7 +10,6 @@ let token;
 describe('photos', () => {
   beforeAll(async () => {
     chai.use(chaiSubset);
-    // it('creates a new user', async () => {
     await createAccount({
       username: 'photoUser',
       password: 'photoUser',
@@ -27,7 +26,6 @@ describe('photos', () => {
       },
     };
     const { data } = await createPhoto({ variables, token });
-    // console.log(`creates a photo inspect ${inspect(data, true, 3)}`);
     expect(data.data.createPhoto).to.have.keys(['name', 'user']);
     expect(data.data.createPhoto.user).to.exist;
     expect(data.data.createPhoto.user).to.have.keys(['username']);
@@ -40,14 +38,29 @@ describe('photos', () => {
   it('get all photos', async () => {
     const variables = {};
     const { data } = await getPhotos({ variables, token });
-    // console.log(`inspect ${inspect(data, false, 6)}`);
     expect(data.data.photos[0]).to.have.keys(['name', 'user']);
     expect(data.data.photos[0].user).to.exist;
-    // expect(data.data.photos[0].user).to.have.keys(['username']);
     expect(data.data.photos[0].user).to.containSubset({
       username: 'photoUser',
     });
-
-    // expect(data).to.be.true;
+  });
+  it('get all nested photos via user', async () => {
+    const {
+      data: {
+        data: {
+          me: { id },
+        },
+      },
+    } = await getMe(token);
+    expect(id).to.exist;
+    const variables = {
+      id,
+    };
+    const { data } = await getPhotoViaUser({ variables, token });
+    expect(data.data.user.photos).to.exist;
+    expect(data.data.user.photos[0]).to.have.keys(['id', 'name']);
+    expect(data.data.user.photos[0]).to.containSubset({
+      name: 'new photo',
+    });
   });
 });

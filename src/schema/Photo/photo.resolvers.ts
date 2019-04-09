@@ -19,7 +19,6 @@ const initialize = () => {
   connection = getConnection();
   repository = connection.getRepository(Photo);
   loader = new GraphQLDatabaseLoader(connection);
-  // const loader = new GraphQLDatabaseLoader(connection);
 };
 
 export const resolvers = {
@@ -31,16 +30,11 @@ export const resolvers = {
     },
     photos: async (_parent, { ...args }, { authScope: { user }, ...allInone }) => {
       repository === undefined && initialize();
-      //const photos = await repository.find({ user });
       const photos = await repository
         .createQueryBuilder('photo')
-
-        // .leftJoinAndSelect('photo.user', 'user.id') // works
         .leftJoinAndMapOne('photo.user.id', User, 'user', 'user.id = photo.user.id')
         .select(['photo', 'user.id'])
-        // .select(['user.id'])
         .getMany();
-      // console.log(`got photos ${inspect(photos, false, 5)}`);
       return photos;
     },
   },
@@ -55,7 +49,6 @@ export const resolvers = {
         photo.user = user;
 
         const _photo = await connection.manager.save(photo);
-        // console.log(`!!!photo results got args ${inspect(_photo)}`);
         return _photo;
       },
     ),
@@ -72,39 +65,9 @@ export const resolvers = {
   },
   /// nested documents
   Photo: {
-    // user: async (photo, args, { loaders }) => {
-    //   console.log(`got!!! ${inspect(photo)}`);
-    //   const user = await User.findOne({ where: { id: photo.user.id } });
-    //   return user;
-    //   //console.log(`gotUSER!!! ${inspect(photo)}`);
-    //   //return await loaders.user.load(board.userId);
-    // },
     user: async (_: any, args: { id: string }, context: any, info: GraphQLResolveInfo) => {
-      // console.log(`got id ${inspect(args)}`);
       const result = await loader.loadOne(User, { id: _.user.id }, info);
-      //const result = await loader.loadOne(User, { id }, info);
       return result;
     },
-    //users:
   },
 };
-
-/*
-    extend type Query {
-    photo(ID: String): Photo
-    photos: [Photo!]
-  }
-
-  extend type Mutation {
-    createPhoto(Photo): Photo
-    updatePhoto(Photo): Photo
-    deletePhoto(ID: String): Boolean
-    toggleSomething: Photo
-  }
-
-  type Photo {
-    id: String
-    name: String!
-  }
-
-  */
