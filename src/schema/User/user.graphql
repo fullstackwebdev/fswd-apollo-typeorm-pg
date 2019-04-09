@@ -1,5 +1,6 @@
   type Query {
     hello: String
+    user(id: ID!): User
     users: [User]
     loggedIn: Boolean
   }
@@ -8,9 +9,11 @@
     signIn(username: String, password: String): UserToken
   }
   type User {
+    id: ID!
     username: String
     password: String
     email: String
+    photos: [Photo!]
   }
   type UserToken {
     token: String

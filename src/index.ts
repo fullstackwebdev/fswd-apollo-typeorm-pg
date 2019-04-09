@@ -1,7 +1,7 @@
-import 'reflect-metadata';
+// import 'reflect-metadata';
 import { createConnection } from 'typeorm';
 import * as jwt from 'jsonwebtoken';
-import * as express from 'express';
+import express from 'express';
 import * as bodyParser from 'body-parser';
 import { ApolloServer, AuthenticationError } from 'apollo-server-express';
 import { Request, Response } from 'express';
@@ -9,6 +9,7 @@ import { genSchema } from './utils/genSchema';
 import { inspect } from 'util';
 
 // import DataLoader from 'dataloader'; // TODO
+//https://github.com/19majkel94/type-graphql/issues/51
 
 import { PORT, SECRET, SERVER, TRUNCATE_ON_RELOAD, DBUSER, DBPASSWD, DBHOST, DBPORT, DATABASE } from './env';
 
@@ -48,21 +49,26 @@ const apollo = new ApolloServer({
   },
 });
 
-if (TRUNCATE_ON_RELOAD === 'true' && process.env.NODE_ENV !== 'production') {
-  console.log(`Nuking DB...`);
-  const pgp = require('pg-promise')();
-  const db = pgp({
-    host: DBHOST,
-    port: DBPORT,
-    database: DATABASE,
-    user: DBUSER,
-    password: DBPASSWD,
-  });
-  db.any(`TRUNCATE TABLE "user"`).catch();
-}
+// if (TRUNCATE_ON_RELOAD === 'true' && process.env.NODE_ENV !== 'production') {
+//   console.log(`Nuking DB...TRUNCATE_ON_RELOAD set to true`);
+//   // const pgp = require('pg-promise')();
+//   // const db = pgp({
+//   //   host: DBHOST,
+//   //   port: DBPORT,
+//   //   database: DATABASE,
+//   //   user: DBUSER,
+//   //   password: DBPASSWD,
+//   // });
+//   // db.any(`TRUNCATE TABLE "user"`).catch();
+// }
 
 createConnection()
   .then(async connection => {
+    if (TRUNCATE_ON_RELOAD === 'true' && process.env.NODE_ENV !== 'production') {
+      console.log(`Nuking DB...TRUNCATE_ON_RELOAD set to true`);
+      await connection.synchronize(true);
+    }
+
     // create express app
     const app = express();
     app.use(bodyParser.json());
