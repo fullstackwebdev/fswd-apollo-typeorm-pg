@@ -62,7 +62,7 @@ export const resolvers = {
       Object.assign(myJob, job);
       //myJob.date_created = Date.parse(job.date_created);
 
-      console.log(`!!!!got args ${inspect(job)}`);
+      // console.log(`!!!!got args ${inspect(job)}`);
 
       // myJob.name = job.name;
 
