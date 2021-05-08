@@ -30,7 +30,7 @@
       "merge-graphql-schemas": "^1.7.6",
       "pg": "^7.18.1",
       "start-server-and-test": "^1.10.8",
-      "typeorm": "0.2.22",
+      "typeorm": "0.2.25",
       "typeorm-loader": "0.0.1-0.5",
       "typescript": "^3.7.5"
    },
